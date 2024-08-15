@@ -50,9 +50,9 @@ public class AccountService {
             if (account.getPassword().length() < 4) {
                 throw new IllegalArgumentException("A Password must be at least four characters long.");
             }
-            // if(accountRepository.getAllAccountUsernames().contains(account.getUsername().trim())){
-            //     throw new IllegalArgumentException("This Username is already taken :(");
-            // }
+            if(accountRepository.findAccountByUsername(account.getUsername().trim()) != null){
+                throw new IllegalArgumentException("This Username is already taken :(");
+            }
         }
 
         catch(IllegalArgumentException e) {
@@ -64,7 +64,7 @@ public class AccountService {
     public Account loginAccount(Account account){
         try{
             validateAccountForLogin(account);
-                Account validAccount = accountRepository.LoginAccount(account);
+                Account validAccount = accountRepository.findAccountByUsername(account.getUsername());
                 return validAccount;
         }
         catch (Exception e) {
@@ -83,6 +83,9 @@ public class AccountService {
                 throw new IllegalArgumentException("A Username is required.");
             }
             if (Objects.isNull(account.getPassword()) || account.getPassword().trim().isEmpty()) {
+                throw new IllegalArgumentException("A Password is required.");
+            }
+            if (accountRepository.findAccountByUsernameAndPassword(account.getUsername(), account.getPassword()) == null) {
                 throw new IllegalArgumentException("A Password is required.");
             }
         }

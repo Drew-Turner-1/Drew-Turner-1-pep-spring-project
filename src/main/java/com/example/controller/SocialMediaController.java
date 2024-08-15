@@ -1,16 +1,13 @@
 package com.example.controller;
 
 import org.springframework.http.ResponseEntity;
-import com.example.entity.Account;
-import com.example.entity.Message;
-import com.example.service.AccountService;
-import com.example.service.MessageService;
+import com.example.entity.*;
+//import com.example.entity.Message;
+import com.example.service.*;
+//import com.example.service.MessageService;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
-// import Model.Account;
-// import Model.Message;
-// import Service.AccountService;
-// import Service.MessageService;
+
 
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller using Spring. The endpoints you will need can be
@@ -21,7 +18,6 @@ import java.util.*;
 
  @RestController
  @ResponseBody
- @RequestMapping("8080")
 public class SocialMediaController {
     AccountService accountService;
     MessageService messageService;

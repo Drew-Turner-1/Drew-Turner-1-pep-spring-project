@@ -12,7 +12,16 @@ import com.example.repository.*;
 
 public class AccountService {
 
+    AccountRepository accountRepository;
+    MessageRepository messageRepository;
+
+    @Autowired
+    public AccountService(AccountRepository accountRepository, MessageRepository messageRepository){
+        this.accountRepository = accountRepository;
+        this.messageRepository = messageRepository;
+    }
+
     public Account addAccount(Account account){
-        return 
+        return accountReopsitory.addAccount(account);
     }
 }

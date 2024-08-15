@@ -49,10 +49,10 @@ public class SocialMediaController {
     ResponseEntity addAccount(@PathVariable Account account){
         Account newAccount = accountService.addAccount(account);
         if((newAccount != null)){
-            ResponseEntity.status(200).body(newAccount);
+            return ResponseEntity.status(200).body(newAccount);
         }
         else{
-            ResponseEntity.status(400);
+            return ResponseEntity.status(400).build();
         }       
     }
 

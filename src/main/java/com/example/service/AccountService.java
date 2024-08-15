@@ -10,6 +10,7 @@ import com.example.entity.*;
 import com.example.repository.*;
 //import com.example.service.MessageService;
 
+@Service
 public class AccountService {
 
     AccountRepository accountRepository;
@@ -62,7 +63,6 @@ public class AccountService {
     public Account loginAccount(Account account){
         try{
             validateAccountForLogin(account);
-            //if(accountDAO.processLogin().contains(account)){
                 Account validAccount = accountRepository.LoginAccount(account);
                 return validAccount;
         }

@@ -19,8 +19,14 @@ import java.util.*;
  @RestController
  @ResponseBody
 public class SocialMediaController {
+
     AccountService accountService;
     MessageService messageService;
+
+    public SocialMediaController(AccountService accountService, MessageService messageService){
+        this.accountService = accountService;
+        this.messageService = messageService;    
+    }
 
     @GetMapping("/messages")
     ResponseEntity getAllMessages(){
@@ -29,24 +35,27 @@ public class SocialMediaController {
     }
 
     @GetMapping("/messages/{message_id}")
-    ResponseEntity getMessagesById(@PathVariable int messageIdOnly){
-        List<Message> messagesById = new ArrayList<Message>(messageService.getMessageById(messageIdOnly));
+    ResponseEntity getMessagesById(@PathVariable ("message_id") int messageIdOnly){
+        Message messagesById = messageService.getMessageById(messageIdOnly);
         return ResponseEntity.status(200).body(messagesById);
     }
 
     @GetMapping("accounts/{account_id}")
-    ResponseEntity loginAccount(@PathVariable int accountId){
-        Account validAccount = accountService.loginAccount(accountId);
+    ResponseEntity loginAccount(@PathVariable ("account_id") int accountId){
+        
+        Account accountIdOnly = new Account();
+        accountIdOnly.setAccountId(accountId);
+        Account validAccount = accountService.loginAccount(accountIdOnly);
         if((validAccount != null)){
-            ResponseEntity.status(200).body(validAccount);
+            return ResponseEntity.status(200).body(validAccount);
         }
         else{
-            ResponseEntity.status(401);
+            return ResponseEntity.status(401).build();
         }    
     }
 
     @PostMapping("/register")
-    ResponseEntity addAccount(@PathVariable Account account){
+    ResponseEntity addAccount(@RequestBody Account account){
         Account newAccount = accountService.addAccount(account);
         if((newAccount != null)){
             return ResponseEntity.status(200).body(newAccount);
@@ -57,18 +66,18 @@ public class SocialMediaController {
     }
 
     @PostMapping("/login")
-    ResponseEntity loginAccount(@PathVariable Account account){
+    ResponseEntity loginAccount(@RequestBody Account account){
         Account validAccount = accountService.loginAccount(account);
         if((validAccount != null)){
-            ResponseEntity.status(200).body(validAccount);
+            return ResponseEntity.status(200).body(validAccount);
         }
         else{
-            ResponseEntity.status(401);
+            return ResponseEntity.status(401).build();
         }      
     }
 
     @PostMapping("/messages")
-    ResponseEntity createMessage(@PathVariable Message message){
+    ResponseEntity createMessage(@RequestBody Message message){
         Message newMessage = messageService.createMessage(message);
         if((newMessage != null)){
             return ResponseEntity.status(200).body(newMessage);
@@ -79,13 +88,13 @@ public class SocialMediaController {
     }
 
     @PatchMapping("/messages/{message_id}")
-    ResponseEntity editMessageById(@PathVariable int messageId){
+    ResponseEntity editMessageById(@PathVariable ("message_id") int messageId){
         Message updatedMessage = messageService.editMessageById(messageId);
         return ResponseEntity.status(200).body(updatedMessage);
     }
 
     @DeleteMapping("/messages/{message_id}")
-    ResponseEntity deleteMessageById(@PathVariable int messageId){
+    ResponseEntity deleteMessageById(@PathVariable ("message_id") int messageId){
         Message deletedMessage = messageService.deleteMessageById(messageId);
         return ResponseEntity.status(200).body(deletedMessage);
     }

@@ -57,10 +57,14 @@ public List<Message> getAllUserMessages(Message postingUser){
     }
 }
 
-public Message getMessageById(Message messageIdOnly){
+public Message getMessageById(Integer messageIdOnly){
     try{
-        Message messageById = messageRepository.getMessageById(messageIdOnly);
-        return messageById;
+        //Message messageById = messageRepository.getMessageById(messageIdOnly);
+        Optional<Message> messageById = messageRepository.findById(messageIdOnly);
+        if(messageById.isPresent()){
+            return messageById.get();
+        }
+        return null;
     }
     catch (Exception e) {
         e.printStackTrace();

@@ -11,7 +11,7 @@ Account findAccountByUsername(String username);
 Account findAccountByUsernameAndPassword(String username, String password);
 
 @Modifying
-@Query("INSERT INTO account (username, password) VALUES (?1,?2)")
+@Query(value = "INSERT INTO Account (username, password) VALUES (?1,?2)", nativeQuery = true)
 Account addAccount(@Param("username") String username, @Param ("password") String passowrd);
 
 }

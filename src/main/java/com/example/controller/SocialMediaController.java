@@ -1,6 +1,10 @@
 package com.example.controller;
 
 import org.springframework.http.ResponseEntity;
+import com.example.entity.Account;
+import com.example.entity.Message;
+import com.example.service.AccountService;
+import com.example.service.MessageService;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 // import Model.Account;
@@ -14,7 +18,13 @@ import java.util.*;
  * where applicable as well as the @ResponseBody and @PathVariable annotations. You should
  * refer to prior mini-project labs and lecture materials for guidance on how a controller may be built.
  */
+
+ @RestController
+ @ResponseBody
+ @RequestMapping("8080")
 public class SocialMediaController {
+    AccountService accountService;
+    MessageService messageService;
 
     @GetMapping("/messages")
     ResponseEntity getAllMessages(){

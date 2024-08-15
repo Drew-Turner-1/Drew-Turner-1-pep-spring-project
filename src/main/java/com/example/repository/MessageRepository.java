@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.*;
 import org.springframework.transaction.annotation.*;
+import org.springframework.stereotype.Repository;
 
 
 public interface MessageRepository  extends JpaRepository<Message, Integer>{
@@ -19,8 +20,8 @@ public interface MessageRepository  extends JpaRepository<Message, Integer>{
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Message  WHERE Message.messageId = :messageId")
-    int deleteMessageById(@Param("messageText") int messageText, @Param("messageId") int messageId);
+    @Query("DELETE FROM Message WHERE Message.messageId = :messageId")
+    int deleteMessageById(@Param("messageId") int messageId);
 
 
 }

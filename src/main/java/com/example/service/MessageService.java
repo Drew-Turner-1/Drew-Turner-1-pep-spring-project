@@ -26,7 +26,8 @@ this.messageRepository = messageRepository;
 public Message createMessage(Message message){
     try{
         validateNewMessage(message);
-        Message newMessage = messageRepository.addMessage(message);
+        //Message newMessage = messageRepository.addMessage(message);
+        Message newMessage = messageRepository.save(message);
         return newMessage;
     }
     catch (Exception e) {
@@ -101,12 +102,12 @@ public void validateNewMessage(Message message){
     if(Objects.isNull(message)){
         throw new IllegalArgumentException("Message can't be empty. ");
     }
-    if(message.getMessage_text().length() >= 255){
+    if(message.getMessageText().length() >= 255){
         throw new IllegalArgumentException("Message must be under 255 characters. ");
     }
-    if(! accountRepository.getAllAccountIds().contains(message.getPosted_by())){
-        throw new IllegalArgumentException("User doesn't exist. ");
-    }
+    // if(! accountRepository.getAllAccountIds().contains(message.getPosted_by())){
+    //     throw new IllegalArgumentException("User doesn't exist. ");
+    // }
 }
 
 public void validateMessageById(Message message){
@@ -117,7 +118,7 @@ public void validateMessageById(Message message){
     if(! messageRepository.getAllMessageIds(message).contains(message.getMessage_id())){
         throw new IllegalArgumentException("Message doesn't exist. ");
     }
-    if(message.getMessage_text().length() >= 255){
+    if(message.getMessageText().length() >= 255){
         throw new IllegalArgumentException("Message must be under 255 characters. ");
     }
     if(! accountRepository.getAllAccountIds().contains(message.getPosted_by())){

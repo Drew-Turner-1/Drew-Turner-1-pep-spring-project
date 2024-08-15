@@ -26,7 +26,8 @@ public class AccountService {
         
         try{
             validateAccount(account);
-            Account newAccount = accountRepository.addAccount(account);
+            //Account newAccount = accountRepository.addAccount(account);
+            Account newAccount = accountRepository.save(account);
             return newAccount;
         }
         catch (Exception e) {
@@ -49,9 +50,9 @@ public class AccountService {
             if (account.getPassword().length() < 4) {
                 throw new IllegalArgumentException("A Password must be at least four characters long.");
             }
-            if(accountRepository.getAllAccountUsernames().contains(account.getUsername().trim())){
-                throw new IllegalArgumentException("This Username is already taken :(");
-            }
+            // if(accountRepository.getAllAccountUsernames().contains(account.getUsername().trim())){
+            //     throw new IllegalArgumentException("This Username is already taken :(");
+            // }
         }
 
         catch(IllegalArgumentException e) {

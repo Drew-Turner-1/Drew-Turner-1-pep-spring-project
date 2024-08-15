@@ -41,6 +41,13 @@ public class SocialMediaController {
     }
 
     @GetMapping("accounts/{account_id}")
+    ResponseEntity getMessagesById(@PathVariable ("account_id") int accountIdOnly){
+        Message messagesByAccountId = messageService.getMessageByAccountId(accountIdOnly);
+        return ResponseEntity.status(200).body(messagesByAccountId);
+    }
+
+
+    @GetMapping("accounts/{account_id}")
     ResponseEntity loginAccount(@PathVariable ("account_id") int accountId){
         
         Account accountIdOnly = new Account();

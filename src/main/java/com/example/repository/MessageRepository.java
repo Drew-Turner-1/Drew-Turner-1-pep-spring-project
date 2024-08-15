@@ -11,6 +11,11 @@ import org.springframework.stereotype.Repository;
 public interface MessageRepository  extends JpaRepository<Message, Integer>{
 
 
+
+    @Query("SELECT * FROM Message")
+    List<Message> getAllMessages();
+
+
     @Query("SELECT FROM Message WHERE Message.postedBy = :accountId")
     List<Message> findMessageByAccountId(@Param("accountId") int accountId);
 

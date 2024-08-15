@@ -71,10 +71,10 @@ public class SocialMediaController {
     ResponseEntity createMessage(@PathVariable Message message){
         Message newMessage = messageService.createMessage(message);
         if((newMessage != null)){
-            ResponseEntity.status(200).body(newMessage);
+            return ResponseEntity.status(200).body(newMessage);
         }
         else{
-            ResponseEntity.status(400);
+            return ResponseEntity.status(400).build();
         }         
     }
 

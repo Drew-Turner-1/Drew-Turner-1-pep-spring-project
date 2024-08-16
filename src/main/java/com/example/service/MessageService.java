@@ -59,7 +59,6 @@ public List<Message> getAllUserMessages(Message postingUser){
 
 public Message getMessageById(Integer messageIdOnly){
     try{
-        //Message messageById = messageRepository.getMessageById(messageIdOnly);
         Optional<Message> messageById = messageRepository.findById(messageIdOnly);
         if(messageById.isPresent()){
             return messageById.get();
@@ -72,27 +71,28 @@ public Message getMessageById(Integer messageIdOnly){
     }
 }
 
-public Message editMessageById(Message messageIdOnly){
+// public Message editMessageById(Message messageIdOnly){
+//     try{
+//         validateMessageById(messageIdOnly);
+//         Message updatedMessage = messageRepository.editMessageById(messageIdOnly);
+//         return updatedMessage;
+//     }
+//     catch (Exception e) {
+//         e.printStackTrace();
+//         return null;
+//     }
+// }
+
+
+public int deleteMessageById(int messageIdOnly){
     try{
-        validateMessageById(messageIdOnly);
-        Message updatedMessage = messageRepository.editMessageById(messageIdOnly);
-        return updatedMessage;
+        validateMessageExists(messageIdOnly);
+        int rowsAffected = messageRepository.deleteMessageById(messageIdOnly);
+        return rowsAffected;
     }
     catch (Exception e) {
         e.printStackTrace();
-        return null;
-    }
-}
-
-
-public Message deleteMessageById(Message messageIdOnly){
-    try{
-        Message deletedMessage = messageRepository.deleteMessageById(messageIdOnly);
-        return deletedMessage;
-    }
-    catch (Exception e) {
-        e.printStackTrace();
-        return null;
+        return 0;
     }
 }
 
@@ -112,19 +112,26 @@ public void validateNewMessage(Message message){
     }
 }
 
-public void validateMessageById(Message message){
+// public void validateMessageById(Message message){
 
-    if(Objects.isNull(message)){
-        throw new IllegalArgumentException("Message can't be empty. ");
-    }
-    if(! messageRepository.getAllMessageIds(message).contains(message.getMessage_id())){
+//     if(Objects.isNull(message)){
+//         throw new IllegalArgumentException("Message can't be empty. ");
+//     }
+//     if(! messageRepository.getAllMessageIds(message).contains(message.getMessage_id())){
+//         throw new IllegalArgumentException("Message doesn't exist. ");
+//     }
+//     if(message.getMessageText().length() >= 255){
+//         throw new IllegalArgumentException("Message must be under 255 characters. ");
+//     }
+//     if(! accountRepository.getAllAccountIds().contains(message.getPostedBy())){
+//         throw new IllegalArgumentException("User doesn't exist. ");
+//     }
+// }
+
+public void validateMessageExists(int messageIdOnly){
+
+    if(Objects.isNull(messageRepository.findMessageByMessageId(messageIdOnly))){
         throw new IllegalArgumentException("Message doesn't exist. ");
-    }
-    if(message.getMessageText().length() >= 255){
-        throw new IllegalArgumentException("Message must be under 255 characters. ");
-    }
-    if(! accountRepository.getAllAccountIds().contains(message.getPostedBy())){
-        throw new IllegalArgumentException("User doesn't exist. ");
     }
 }
 

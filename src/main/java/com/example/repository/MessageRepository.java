@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 public interface MessageRepository  extends JpaRepository<Message, Integer>{
 
-
+    Message findMessageByMessageId(int messageId);
 
     @Query(value = "SELECT * FROM Message", nativeQuery = true)
     List<Message> getAllMessages();
@@ -23,7 +23,6 @@ public interface MessageRepository  extends JpaRepository<Message, Integer>{
     @Query(value = "INSERT INTO Message (postedBy, messageText, timePostedEpoch) VALUES (messageText, )", nativeQuery = true)
     Message addMessage(@Param("messageText") String messageText);
     
-
 
     @Modifying
     @Query(value = "UPDATE Message SET Message.messageText = :messageText WHERE Message.messageId = :messageId", nativeQuery = true)

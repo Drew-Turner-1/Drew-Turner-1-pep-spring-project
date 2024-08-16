@@ -68,12 +68,12 @@ public class MessageService {
         }
     }
 
-    public int editMessageById(String messageText, int messageIdOnly){
+    public int editMessageById(String messageText, int messageId){
         try{
-            validateMessageExists(messageIdOnly);
+            validateMessageExists(messageId);
             validateMessageLength(messageText);
             validateMessageNotEmpty(messageText);
-            messageRepository.editMessageById(messageText, messageIdOnly);
+            messageRepository.editMessageById(messageText, messageId);
             return 1;
         }
         catch (Exception e) {
@@ -112,9 +112,9 @@ public class MessageService {
     }
 
 
-    public void validateMessageExists(int messageIdOnly){
+    public void validateMessageExists(int messageId){
 
-        if(Objects.isNull(messageRepository.findMessageByMessageId(messageIdOnly))){
+        if(Objects.isNull(messageRepository.findMessageByMessageId(messageId))){
             throw new IllegalArgumentException("Message doesn't exist. ");
         }
     }

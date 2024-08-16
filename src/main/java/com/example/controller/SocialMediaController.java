@@ -40,10 +40,12 @@ public class SocialMediaController {
         return ResponseEntity.status(200).body(messagesById);
     }
 
-    @GetMapping("accounts/{account_id}")
-    ResponseEntity getMessagesById(@PathVariable ("account_id") int accountIdOnly){
-        Message messagesByAccountId = messageService.getMessageByAccountId(accountIdOnly);
-        return ResponseEntity.status(200).body(messagesByAccountId);
+    @GetMapping("accounts/{accountId}/messages")
+    ResponseEntity getAllUserMessages(@PathVariable ("accountId") int postingUserId){
+        //List<Message> allMessagesByUser = new ArrayList<Message>(messageService.getMessageByAccountId(accountIdOnly));
+        List<Message> allMessagesByUser = messageService.getAllUserMessages(postingUserId);
+
+        return ResponseEntity.status(200).body(allMessagesByUser);
     }
 
 
@@ -95,9 +97,14 @@ public class SocialMediaController {
     }
 
     @PatchMapping("/messages/{message_id}")
-    ResponseEntity editMessageById(@PathVariable ("message_id") int messageId){
-        Message updatedMessage = messageService.editMessageById(messageId);
-        return ResponseEntity.status(200).body(updatedMessage);
+    ResponseEntity editMessageById(@PathVariable ("message_id") int messageId, @RequestBody String messageText){
+        int updatedMessage = messageService.editMessageById(messageText, messageId);
+        if((updatedMessage == 1)){
+            return ResponseEntity.status(200).body(updatedMessage);
+        }
+        else{
+            return ResponseEntity.status(400).build();
+        }   
     }
 
     @DeleteMapping("/messages/{message_id}")

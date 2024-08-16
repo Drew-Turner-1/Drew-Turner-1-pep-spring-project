@@ -15,8 +15,9 @@ public interface MessageRepository  extends JpaRepository<Message, Integer>{
     @Query(value = "SELECT * FROM Message", nativeQuery = true)
     List<Message> getAllMessages();
 
+
     @Query(value = "SELECT * FROM Message WHERE Message.postedBy = :accountId", nativeQuery = true)
-    List<Message> findMessageByAccountId(@Param("accountId") int accountId);
+    List<Message> getAllUserMessages(@Param("accountId") int accountId);
     
 
     @Modifying
@@ -26,7 +27,7 @@ public interface MessageRepository  extends JpaRepository<Message, Integer>{
 
     @Modifying
     @Query(value = "UPDATE Message SET Message.messageText = :messageText WHERE Message.messageId = :messageId", nativeQuery = true)
-    int updateMessageById(@Param("messageText") int messageText, @Param("messageId") int messageId);
+    int editMessageById(@Param("messageText") String messageText, @Param("messageId") int messageIdOnly);
 
     @Modifying
     @Transactional

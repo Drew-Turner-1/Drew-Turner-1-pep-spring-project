@@ -73,7 +73,12 @@ public class MessageService {
             validateMessageExists(messageId);
             validateMessageLength(messageText);
             validateMessageNotEmpty(messageText);
-            messageRepository.editMessageById(messageText, messageId);
+            //messageRepository.editMessageById(messageText, messageId);
+            Message messageToSave = new Message();
+            messageToSave.setMessageText(messageText);
+            messageToSave.setMessageId(messageId);
+            messageRepository.save(messageToSave);
+
             return 1;
         }
         catch (Exception e) {

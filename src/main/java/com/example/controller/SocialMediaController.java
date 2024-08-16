@@ -94,7 +94,8 @@ public class SocialMediaController {
     }
 
     @PatchMapping("/messages/{message_id}")
-    ResponseEntity editMessageById(@PathVariable ("message_id") int messageId, @RequestBody String messageText){
+    ResponseEntity editMessageById(@PathVariable ("message_id") int messageId, @RequestBody Message messageJustText){
+        String messageText = messageJustText.getMessageText();
         int updatedRows = messageService.editMessageById(messageText, messageId);
         if((updatedRows == 1)){
             return ResponseEntity.status(200).body(updatedRows);

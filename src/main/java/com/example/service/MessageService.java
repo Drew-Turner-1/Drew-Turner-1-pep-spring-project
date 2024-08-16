@@ -74,7 +74,6 @@ public class MessageService {
             validateMessageLength(messageText);
             validateMessageNotEmpty(messageText);
             messageRepository.editMessageById(messageText, messageIdOnly);
-
             return 1;
         }
         catch (Exception e) {

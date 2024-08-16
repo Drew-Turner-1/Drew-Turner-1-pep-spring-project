@@ -40,7 +40,6 @@ public class SocialMediaController {
 
     @GetMapping("accounts/{accountId}/messages")
     ResponseEntity getAllUserMessages(@PathVariable ("accountId") int postingUserId){
-        //List<Message> allMessagesByUser = new ArrayList<Message>(messageService.getMessageByAccountId(accountIdOnly));
         List<Message> allMessagesByUser = messageService.getAllUserMessages(postingUserId);
 
         return ResponseEntity.status(200).body(allMessagesByUser);
